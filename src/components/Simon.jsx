@@ -5,32 +5,19 @@ import { SimonDisk } from "./SimonDisk";
 
 import { GameSimonContext } from "../context/GameSimonContext";
 import { Checker } from "./Checker";
+import { SequenceGenerator } from "./SequenceGenerator";
 
 export const Simon = () => {
-    //const redRef = useRef(null);
-    //const blueRef = useRef(null);
-    //const greenRef = useRef(null);
-    //const yellowRef = useRef(null);
 
-    
     const { redRef, blueRef, yellowRef, greenRef }  = useContext(GameSimonContext);
     
     const { colors } = useColorHandler({ redRef, blueRef, yellowRef, greenRef });
-
-    const [ sequence, setSequence ] = useState(
-        [
-            colors['red'],
-            colors['yellow'],
-        ]
-    )
-
-    
-      
+        
     return (
         <section className="border h-full flex justify-between p-10">
             <div className="w-1/2  flex flex-col gap-3">
-                
-                
+                <h2 className="font-roboto font-black text-xl text-gray-100"> Computer mode </h2>
+                <SequenceGenerator />
                 <Checker />
                 <div>
                     Mensaje de alerta

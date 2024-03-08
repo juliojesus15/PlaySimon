@@ -64,7 +64,7 @@ export const GameSimonProvider = ({ children }) => {
 	}
 		
 	const generateRandomSequence = () => {
-		const sequenceLength = 4;
+		const sequenceLength = 2;
 		console.log("🚀 ~ generateRandomSequence ~ sequenceLength:", sequenceLength);
 
 		setSequence( prev => {
@@ -72,7 +72,8 @@ export const GameSimonProvider = ({ children }) => {
 			const colorName = ['red', 'yellow', 'blue', 'green']
 
 			for (let i = 0; i < sequenceLength; i++) {
-				const randomNumber = generateRandomNumber(0,4);
+				const randomNumber = generateRandomNumber(0,3);
+				console.log("🚀 ~ generateRandomSequence ~ randomNumber:", randomNumber)
 				const randomColorName = colorName[ randomNumber ];
 				const objColor = baseColors[ randomColorName ];
 				newSequence.push( objColor );				
