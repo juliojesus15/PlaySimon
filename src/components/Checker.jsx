@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
 import { GameSimonContext } from "../context/GameSimonContext";
+import { DotColor } from "./DotColor";
 
 export const Checker = () => {
-
     const { userColors }  = useContext(GameSimonContext);
    
     return (              
@@ -12,7 +12,8 @@ export const Checker = () => {
                 userColors && userColors.map( (item, key) => {
                     return (
                         <li className="flex items-center gap-2" key={ key }>
-                            <div className={`w-4 h-4 rounded-full border border-white shadow-xl shadow-black ${item.colorBasic}`}></div>
+                            
+                            <DotColor objColor={ item } />
                             {
                                 item.status 
                                     ? <p> Correcto </p> 
