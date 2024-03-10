@@ -51,16 +51,17 @@ export const GameSimonProvider = ({ children }) => {
 		}  
 	})
 
-  	const [ mode, setMode ] = useState(null);
+  	const [ mode, setMode ] = useState('solo');
+	const [ showResult, setShowResult ] = useState(false);
   
-	const [ soloSettings, setSoloSetting ] = useState(defaultSoloSettings);
+	const [ soloSettings, setSoloSettings ] = useState(defaultSoloSettings);
 	const [ multiplayerSetting, setMultiplayerSetting ] = useState(defaultMultiplayerSettings);
 
 	const [ sequence, setSequence ] = useState([]);
 
 	const [ userColors, setUserColors ] = useState([]);
 
-
+ 
 	const addNewColor = (color) => {
 		setUserColors(prevResponse => [...prevResponse, color])
 	}
@@ -83,14 +84,32 @@ export const GameSimonProvider = ({ children }) => {
 		});
 	}
 
+	// Scores
+	const updateMisses = () => {
+		setSoloSettings( prev => {
+			return {...prev, misses: prev.misses + 1 } 
+		})
+	}
+	
+	const updateHits = () => {
+		setSoloSettings( prev => {
+			return {...prev, hits: prev.hits + 1 } 
+		})
+	}
+	
+	const resetSoloValues = () => {
+		setSoloSettings(defaultSoloSettings);
+	}
+
   	const values = { 
 		baseColors,
 		redRef, blueRef, greenRef, yellowRef,
 		generateRandomSequence,
 		mode,
-		soloSettings, setSoloSetting,
+		showResult,
 		multiplayerSetting, setMultiplayerSetting,
 		userColors, addNewColor, sequence,
+		soloSettings, updateHits, updateMisses, resetSoloValues,
   	} 
   
   	return ( 

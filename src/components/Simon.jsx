@@ -1,12 +1,20 @@
-import { SimonDisk } from "./SimonDisk";
-import { Checker } from "./Checker";
+import { useContext } from "react";
+
+import { GameSimonContext } from "../context/GameSimonContext";
+
+import { Soloboard } from "./SoloBoard";
 import { SequenceGenerator } from "./SequenceGenerator";
+import { Checker } from "./Checker";
+import { SimonDisk } from "./SimonDisk";
+import { ResultModal } from "./ResultModal";
 
 export const Simon = () => {            
+    const { mode } = useContext(GameSimonContext);
+
     return (
-        <section className="border h-full flex justify-between p-10">
+        <section className="border h-full flex flex-col-reverse lg:flex-row justify-between p-10">
             <div className="w-1/2  flex flex-col gap-3">
-                <h2 className="font-roboto font-black text-xl text-gray-100"> Computer mode </h2>
+                <Soloboard />
                 <SequenceGenerator />
                 <Checker />
                 <div>
@@ -19,6 +27,7 @@ export const Simon = () => {
                     <SimonDisk  />
                 </div>            
             </div>
+            <ResultModal />
         </section>
     )
 }
