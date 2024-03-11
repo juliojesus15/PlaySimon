@@ -9,7 +9,7 @@ const defaultMultiplayerSettings = {
 }
 
 export const ScoreProvider = ({ children }) => {	  	
-  	const [ mode, setMode ] = useState('solo');
+  	const [ mode, setMode ] = useState(null);
 	const [ showResult, setShowResult ] = useState(false);
       
 	// Solo config 

@@ -6,7 +6,7 @@ export const Menu = () => {
     return (
         <section className="flex flex-col justify-center items-center gap-10 h-full">            
             <h1 className="font-roboto font-black text-gray-100 text-3xl uppercase"> 
-                <span className="border-b-4 border-b-amber-400">play with simon</span>
+                <span className="border-b-4 border-b-amber-400">play <span className="text-base"> with </span> simon</span>
                 <br/>
                 <div className="flex justify-between text-sm text-center mt-1 py-1 px-1">
                     <span>C</span>

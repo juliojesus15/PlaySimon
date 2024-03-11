@@ -5,15 +5,13 @@ import { DotColor } from "./DotColor";
 
 export const SequenceGenerator = () => {
 
-    const { userColors, generateRandomSequence, sequence }  = useContext(GameSimonContext);
+    const { generateRandomSequence, sequence }  = useContext(GameSimonContext);
    
-    const [ generateSequence, setGenerateSenquence ] = useState(false);
-
     const [ temporalSequence, setTemporalSequence ] = useState([]);
 
     useEffect( () => {  
         if( sequence.length >0 ) {
-            
+            setTemporalSequence([]);
             sequence.forEach( (color,index) => {                        
                 
                 const intervalId = setTimeout(() => {
@@ -23,7 +21,7 @@ export const SequenceGenerator = () => {
                     setTemporalSequence( prev => [...prev, color]);
                      
                     const ref = color.ref;
-                    ref.current.classList.remove(color.colorBasic);
+                    ref.current.classList.remove(color.colorBasic); 
                     ref.current.classList.add(color.colorActive);
                     
                     setTimeout(() => {

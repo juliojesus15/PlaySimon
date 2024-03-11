@@ -3,17 +3,6 @@ import { generateRandomNumber } from "../utils/utils";
 
 export const GameSimonContext = createContext();
 
-const defaultSoloSettings = {
-  hits: 0,
-  misses: 0,
-}
-
-const defaultMultiplayerSettings = {
-  turn: 1,
-  numPlayers: 0,
-  activePlayers: [],
-}
-
 export const GameSimonProvider = ({ children }) => {
 	const redRef = useRef(null);
 	const blueRef = useRef(null);
@@ -51,12 +40,6 @@ export const GameSimonProvider = ({ children }) => {
 		}  
 	})
 
-  	const [ mode, setMode ] = useState('solo');
-	const [ showResult, setShowResult ] = useState(false);
-  
-	const [ soloSettings, setSoloSettings ] = useState(defaultSoloSettings);
-	const [ multiplayerSetting, setMultiplayerSetting ] = useState(defaultMultiplayerSettings);
-
 	const [ sequence, setSequence ] = useState([]);
 
 	const [ userColors, setUserColors ] = useState([]);
@@ -67,7 +50,7 @@ export const GameSimonProvider = ({ children }) => {
 	}
 		
 	const generateRandomSequence = () => {
-		const sequenceLength = 2;
+		const sequenceLength = 4;
 
 		setSequence( prev => {
 			const newSequence = [];
@@ -84,32 +67,13 @@ export const GameSimonProvider = ({ children }) => {
 		});
 	}
 
-	// Scores
-	const updateMisses = () => {
-		setSoloSettings( prev => {
-			return {...prev, misses: prev.misses + 1 } 
-		})
-	}
-	
-	const updateHits = () => {
-		setSoloSettings( prev => {
-			return {...prev, hits: prev.hits + 1 } 
-		})
-	}
-	
-	const resetSoloValues = () => {
-		setSoloSettings(defaultSoloSettings);
-	}
-
   	const values = { 
 		baseColors,
+		sequence,
+		userColors, 
 		redRef, blueRef, greenRef, yellowRef,
 		generateRandomSequence,
-		mode,
-		showResult,
-		multiplayerSetting, setMultiplayerSetting,
-		userColors, addNewColor, sequence,
-		soloSettings, updateHits, updateMisses, resetSoloValues,
+		addNewColor, 
   	} 
   
   	return ( 

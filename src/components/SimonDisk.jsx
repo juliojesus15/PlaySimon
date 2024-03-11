@@ -6,27 +6,32 @@ import { ScoreContext } from "../context/ScoreContext";
 import simonDisk from "../assets/simon.webp"
 
 export const SimonDisk = () => {
-    const { baseColors, sequence, addNewColor }  = useContext(GameSimonContext);
+    const { baseColors, sequence, addNewColor, generateRandomSequence }  = useContext(GameSimonContext);
     
     const { updateMisses, updateHits, misses, setShowResult }  = useContext(ScoreContext);
     
-    const [ localSequence, setLocalSequence ] = useState([]);
+    const [ localSequence, setLocalSequence ] = useState(null);
 
     const { yellow, red, blue, green } = baseColors;
 
     useEffect( () => {
-        if( sequence.length == 0) return;
+        if(sequence.length==0) return;
+        console.log("nueva secuencia se ha generado")
         setLocalSequence(sequence);
     }, [ sequence ])
 
     useEffect( () => {
-        if(misses>=3) {
-            setShowResult(true);
-            console.log("Sobrepaso el limite, perdiste...")
-        }
-    }, [misses] )
+        if(misses>=3) setShowResult(true);
+    }, [ misses ])
 
-    const pushColor = (color) => {
+    useEffect( () => {
+        if( localSequence!==null && localSequence.length===0 ) {
+            console.log("Complete");
+            generateRandomSequence();
+        }
+    }, [ localSequence ])
+
+    const pushColor = (color) => {        
         if(localSequence.length == 0) return;
 
         const message = new SpeechSynthesisUtterance(color.name);
@@ -42,32 +47,27 @@ export const SimonDisk = () => {
         }, 200);
                         
         const firstElement = localSequence[0]; // Obtener el primer elemento de sequence para co
-                
-        
+                        
         // Verificar si el elemento está presente en sequence
         const checkColor = firstElement.name === color.name;
         
         const newElement = {...color, status: checkColor}        
-        if( checkColor ) {
-            addNewColor(newElement);
-            setLocalSequence( prev => prev.slice(1));
-            updateHits();                        
-        } else {
-            updateMisses();
-            console.log("Fallido...")
-        }
+        addNewColor(newElement);
 
-        
-        if(misses>=3) {
-            console.log("PERDISTE")
-        }
+        if( checkColor ) {
+            setLocalSequence( prev => prev.slice(1));
+            updateHits();          
+        } else {        
+            setLocalSequence(sequence);            
+            updateMisses();
+        }          
     }
 
     return (
         <div>
             <div>
                 {
-                    localSequence && localSequence.map( (item, index) => <div key={ index } className="text-xs text-white">{ item.name }</div>)
+                    localSequence!=null && localSequence.map( (item, index) => <div key={ index } className="text-xs text-white">{ item.name }</div>)
                 }
             </div>
         
