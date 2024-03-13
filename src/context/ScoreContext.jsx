@@ -9,13 +9,19 @@ const defaultMultiplayerSettings = {
 }
 
 export const ScoreProvider = ({ children }) => {	  	
-  	const [ mode, setMode ] = useState(null);
+  	const [ mode, setMode ] = useState( localStorage.getItem('gameMode') ? localStorage.getItem('gameMode') : null );
 	const [ showResult, setShowResult ] = useState(false);
       
 	// Solo config 
 	const [ misses, setMisses ] = useState(0);
 	const [ hits, setHits ] = useState(0);
 
+	// mode
+	const selectGameMode = (gameMode) => {
+		setMode(gameMode);
+		localStorage.setItem('gameMode', gameMode);
+	} 
+	
 	// Scores
 	const updateMisses = () => {
 		setMisses( prev => prev+1 )
@@ -28,10 +34,11 @@ export const ScoreProvider = ({ children }) => {
 	const resetSoloValues = () => {
 		setMisses(0);
 		setHits(0);
+		setMode(null);
 	}
 
   	const values = { 
-		mode,
+		mode, selectGameMode,
 		showResult,	setShowResult,	
 		hits, misses, updateHits, updateMisses, resetSoloValues,
   	} 

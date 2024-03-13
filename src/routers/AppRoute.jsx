@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Routes, Route } from 'react-router-dom';
-
+import { useContext } from "react";
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 // context
 import { ScoreContext } from "../context/ScoreContext";
@@ -8,42 +7,44 @@ import { ScoreContext } from "../context/ScoreContext";
 // pages
 import SimonScreen from "../pages/Simon";
 import GameScreen from "../pages/Game";
-//import { Login } from "../pages/Login";
 
 // components
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
-//import { LoadingForm } from "../components/LoadingForm";
+
+import { MultiplayerMode } from "../components/MultiplayerMode"
 
 export const AppRoute = () => {	 
-    const [ loading, setLoading ] = useState(false);
     const { mode } = useContext(ScoreContext);
-    const [ isLoggedIn, setIsLoggedIn ] = useState(false);
-    
-    useEffect( () => { 
-        if( mode ) setIsLoggedIn(true);
-    },[ mode ])
-  
-    if( loading ) {
-        return (
-            <div className="flex justify-center w-screen h-screen items-center bg-gradient-to-b from-accent to-[#4e3274]"> 
-                Loading ...
-            </div>
-        )
-    }
 
 	return (
-            <Routes>
-                <Route exact path={ "simon" } element={ <PrivateRoute isLoggedIn={ isLoggedIn } /> } >
-                    <Route  path=""  element={<GameScreen />} />
-                </Route>
-                
-                <Route exact path={ "/" } element={ <PublicRoute isLoggedIn={ isLoggedIn } /> } >
-                    <Route path="" element={ <SimonScreen /> } />
-                </Route>
-
-
-            </Routes>        
+        <div className="bg-stars bg-cover bg-center h-screen w-screen">
+            <BrowserRouter>
+                <Routes>
+                    <Route 
+                        exact 
+                        path={ "multiplayer" } 
+                        element={ <PrivateRoute mode={ mode } path={"multiplayer"} /> } 
+                    >
+                        <Route  path=""  element={<MultiplayerMode />} />
+                    </Route>       
+                    <Route 
+                        exact 
+                        path={ "solo" } 
+                        element={ <PrivateRoute mode={ mode } path={"solo"} /> } 
+                    >
+                        <Route  path=""  element={<GameScreen />} />
+                    </Route>     
+                    <Route 
+                        exact 
+                        path={ "/" } 
+                        element={ <PublicRoute mode={ mode } path={"/"} /> } 
+                    >
+                        <Route path="" element={ <SimonScreen /> } />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </div>
 
 	)
 }

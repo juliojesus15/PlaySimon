@@ -1,9 +1,9 @@
-import { Simon } from "../../components/Simon";
+import { SingleMode } from "../../components/SingleMode";
 
 const GameScreen = () => {
   return (
     <div className="h-screen container">
-      <Simon />
+      <SingleMode />
     </div> 
   )
 }

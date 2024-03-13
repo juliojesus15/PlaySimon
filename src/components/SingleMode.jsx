@@ -7,12 +7,14 @@ import { SequenceGenerator } from "./SequenceGenerator";
 import { Checker } from "./Checker";
 import { SimonDisk } from "./SimonDisk";
 import { ResultModal } from "./ResultModal";
+import { HomeButton } from "./HomeButton";
 
-export const Simon = () => {            
-    const { mode } = useContext(GameSimonContext);
-
+export const SingleMode = () => {            
+ 
+    
+ 
     return (
-        <section className="border h-full flex flex-col-reverse lg:flex-row justify-between p-10">
+        <section className=" h-full flex flex-col-reverse md:flex-row justify-between p-10">
             <div className="w-1/2  flex flex-col gap-3">
                 <Soloboard />
                 <SequenceGenerator />
@@ -22,12 +24,15 @@ export const Simon = () => {
                 </div>
             </div>
 
-            <div className="w-1/2 border flex justify-center items-start">
+            <div className="w-1/2  flex justify-center items-start">
                 <div className="w-80 h-80 rounded-full shadow-2xl shadow-black">
                     <SimonDisk  />
                 </div>            
             </div>
             <ResultModal />
+
+            
+            <HomeButton />
         </section>
     )
 }

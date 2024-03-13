@@ -1,5 +1,6 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-export const PublicRoute = ( { isLoggedIn } ) => {
-    return isLoggedIn ? <Navigate to={"simon"} /> : <Outlet />;
+export const PublicRoute = ( { mode } ) => {        
+    return (mode!=null) ? <Navigate to={mode} /> : <Outlet />;
 }
