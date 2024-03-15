@@ -6,9 +6,21 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        'custom-blue': {
+          50:  '#2656C3',
+          100: '#7293E4',
+          200: '#262956',
+          300: '#181B3F',          
+				},
+        'custom-yellow': {
+					100: "#F8D34D",
+				},
+      },
       fontFamily: {        
 				'roboto':	 	['roboto',  'sans-serif'],	
         'body': 		['lato', 'sans-serif'],			
+        'title':    ['Passion One', 'sans-serif'],
 			},
       backgroundImage: {         
         'stars': "url('./assets/background.svg')",

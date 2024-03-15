@@ -8,10 +8,16 @@ import { Checker } from "./Checker";
 import { SimonDisk } from "./SimonDisk";
 import { ResultModal } from "./ResultModal";
 import { HomeButton } from "./HomeButton";
+import { ScoreContext } from "../context/ScoreContext";
+import { SoloMenu } from "./SoloMenu";
+
+import { avatars } from "../constants/avatar";
 
 export const SingleMode = () => {            
  
-    
+    const { soloPlayer, setSoloPlayer } = useContext(ScoreContext);
+
+    if( !soloPlayer ) return <SoloMenu avatars={ avatars } />
  
     return (
         <section className=" h-full flex flex-col-reverse md:flex-row justify-between p-10">

@@ -15,6 +15,7 @@ export const ScoreProvider = ({ children }) => {
 	// Solo config 
 	const [ misses, setMisses ] = useState(0);
 	const [ hits, setHits ] = useState(0);
+	const [ soloPlayer, setSoloPlayer ] = useState(null);
 
 	// mode
 	const selectGameMode = (gameMode) => {
@@ -41,6 +42,7 @@ export const ScoreProvider = ({ children }) => {
 		mode, selectGameMode,
 		showResult,	setShowResult,	
 		hits, misses, updateHits, updateMisses, resetSoloValues,
+		soloPlayer, setSoloPlayer
   	} 
   
   	return ( 
