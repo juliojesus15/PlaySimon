@@ -7,12 +7,12 @@ import { ScoreContext } from "../context/ScoreContext";
 // pages
 import SimonScreen from "../pages/Simon";
 import GameScreen from "../pages/Game";
+import MultiplayerScreen from "../pages/Multiplayer";
 
 // components
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 
-import { MultiplayerMode } from "../components/MultiplayerMode"
 
 export const AppRoute = () => {	 
     const { mode } = useContext(ScoreContext);
@@ -26,7 +26,7 @@ export const AppRoute = () => {
                         path={ "multiplayer" } 
                         element={ <PrivateRoute mode={ mode } path={"multiplayer"} /> } 
                     >
-                        <Route  path=""  element={<MultiplayerMode />} />
+                        <Route  path=""  element={<MultiplayerScreen />} />
                     </Route>       
                     <Route 
                         exact 

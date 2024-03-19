@@ -1,0 +1,3 @@
+score - contexto para todo lo relacionado a puntajes y jugadores
+sequence - contexto para todo relacionado a los colores 
+round - context para todo lo relacionado a timing

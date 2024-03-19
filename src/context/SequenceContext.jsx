@@ -1,9 +1,10 @@
 import { useRef, createContext, useState } from "react";
+
 import { generateRandomNumber } from "../utils/utils";
 
-export const GameSimonContext = createContext();
+export const SequenceContext = createContext();
 
-export const GameSimonProvider = ({ children }) => {
+export const SequenceProvider = ({ children }) => {
 	const redRef = useRef(null);
 	const blueRef = useRef(null);
 	const greenRef = useRef(null);
@@ -42,15 +43,14 @@ export const GameSimonProvider = ({ children }) => {
 
 	const [ sequence, setSequence ] = useState([]);
 
-	const [ userColors, setUserColors ] = useState([]);
-
+	const [ frontColor, setFrontColor ] =  useState(null);	// FrontColor representa el ultimo color que se ha presionado en el disco
  
-	const addNewColor = (color) => {
-		setUserColors(prevResponse => [...prevResponse, color])
+	const updateFrontColor = (color) => {
+		setFrontColor(color);
 	}
 		
 	const generateRandomSequence = () => {
-		const sequenceLength = 4;
+		const sequenceLength = 2;
 
 		setSequence( prev => {
 			const newSequence = [];
@@ -68,17 +68,14 @@ export const GameSimonProvider = ({ children }) => {
 	}
 
   	const values = { 
-		baseColors,
-		sequence,
-		userColors, 
-		redRef, blueRef, greenRef, yellowRef,
-		generateRandomSequence,
-		addNewColor, 
+		baseColors, redRef, blueRef, greenRef, yellowRef, 
+		sequence, generateRandomSequence,
+		frontColor, updateFrontColor
   	} 
   
   	return ( 
-    	<GameSimonContext.Provider value={ values }>
+    	<SequenceContext.Provider value={ values }>
       		{ children }    
-    	</GameSimonContext.Provider>
+    	</SequenceContext.Provider>
   	) 
 }

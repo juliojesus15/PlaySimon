@@ -1,15 +1,18 @@
-import { GameSimonProvider } from "./context/GameSimonContext";
+import { SequenceProvider } from "./context/SequenceContext";
 import { ScoreProvider } from "./context/ScoreContext";
+import { RoundProvider } from "./context/RoundContext";
 
 import { AppRoute } from "./routers/AppRoute";
 
 function App() {
-  	return (        
-		<GameSimonProvider>
-        	<ScoreProvider>
-          		<AppRoute />
-			</ScoreProvider>
-      	</GameSimonProvider>    
+  	return (
+		<SequenceProvider>
+			<RoundProvider>
+				<ScoreProvider>
+					<AppRoute />
+				</ScoreProvider>
+			</RoundProvider>
+      	</SequenceProvider>    
   	)
 }
 

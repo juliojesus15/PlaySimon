@@ -13,3 +13,9 @@
 		@apply max-w-3xl mx-auto;
 	}
 }
+
+@layer utilities {	
+	.timer-bar {
+		transition: width 1s linear; /* Transición lineal de 1 segundo para animar el ancho */
+	}
+}

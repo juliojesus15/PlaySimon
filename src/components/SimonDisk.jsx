@@ -1,80 +1,69 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
-import { GameSimonContext } from "../context/GameSimonContext";
-import { ScoreContext } from "../context/ScoreContext";
+import { SequenceContext } from "../context/SequenceContext";
 
 import simonDisk from "../assets/simon.webp"
 
 export const SimonDisk = () => {
-    const { baseColors, sequence, addNewColor, generateRandomSequence }  = useContext(GameSimonContext);
-    
-    const { updateMisses, updateHits, misses, setShowResult }  = useContext(ScoreContext);
-    
-    const [ localSequence, setLocalSequence ] = useState(null);
-
+    const { baseColors, updateFrontColor }  = useContext(SequenceContext);
+        
     const { yellow, red, blue, green } = baseColors;
-
-    useEffect( () => {
-        if(sequence.length==0) return;
-        console.log("nueva secuencia se ha generado")
-        setLocalSequence(sequence);
-    }, [ sequence ])
-
-    useEffect( () => {
-        if(misses>=3) setShowResult(true);
-    }, [ misses ])
-
+    /*
+    
     useEffect( () => {
         if( localSequence!==null && localSequence.length===0 ) {
-            console.log("Complete");
-            generateRandomSequence();
+            let counter = 3;
+            resetUserColors();
+            const intervalId = setInterval( ()=> {
+                setMessage(`la siguiente ronda empieza en ${counter}`)
+
+                counter = counter - 1;
+                if (counter === 0) {
+                    clearInterval(intervalId);
+                }
+            }, 1000)
+
+            setTimeout( ()=> {
+                setMessage("Memoriza la siguiente secuencia")
+                generateRandomSequence();
+            }, 2000)        
         }
     }, [ localSequence ])
+    */
 
-    const pushColor = (color) => {        
-        if(localSequence.length == 0) return;
-
-        const message = new SpeechSynthesisUtterance(color.name);
+    // Efecto de voz
+    const speakColor = (color) => {
+        const message = new SpeechSynthesisUtterance(color);
         speechSynthesis.speak(message);
-
-        const ref = color.ref
-        ref.current.classList.remove(color.colorHover);
-        ref.current.classList.add(color.colorActive);
-
-        setTimeout(() => {
-            ref.current.classList.remove(color.colorActive);
-            ref.current.classList.add(color.colorHover);
-        }, 200);
-                        
-        const firstElement = localSequence[0]; // Obtener el primer elemento de sequence para co
-                        
-        // Verificar si el elemento está presente en sequence
-        const checkColor = firstElement.name === color.name;
-        
-        const newElement = {...color, status: checkColor}        
-        addNewColor(newElement);
-
-        if( checkColor ) {
-            setLocalSequence( prev => prev.slice(1));
-            updateHits();          
-        } else {        
-            setLocalSequence(sequence);            
-            updateMisses();
-        }          
     }
 
-    return (
-        <div>
-            <div>
-                {
-                    localSequence!=null && localSequence.map( (item, index) => <div key={ index } className="text-xs text-white">{ item.name }</div>)
-                }
-            </div>
-        
+    // Efecto de pulsacion al momento del click sobre un color del disco simon
+    const clickedColor = (color) => {
+        const { name, ref, colorHover, colorActive} =  color
+
+        // Activar voz para pronunciar el color
+        speakColor(name);
+
+        const { current } = ref;        
+        current.classList.remove(colorHover);
+        current.classList.add(colorActive);
+
+        setTimeout(() => {
+            current.classList.remove(colorActive);
+            current.classList.add(colorHover);
+        }, 200);
+    }
+    
+    const handleClickedColor = (color) => {        
+        clickedColor(color);        // Llama al efecto de voz e iluminacion del disco
+        updateFrontColor(color);    // Actualiza frontColor para verificar si es correcto con el color presionado con el de la secuencia
+    }
+
+    return (              
         <div className=" h-[100%] w-[100%] rounded-full bg-whit relative b bg-contain">
             <div 
                 ref={ yellow.ref } 
-                onClick={ () => pushColor(yellow) }
+                onClick={ () => handleClickedColor(yellow) }
                 className={`
                     absolute top-0 left-0 rounded-tl-full 
                     w-1/2 h-1/2 border-2 border-black overflow-hidden cursor-pointer  
@@ -87,7 +76,7 @@ export const SimonDisk = () => {
         
             <div  
                 ref={ blue.ref }  
-                onClick={ () => pushColor(blue) }
+                onClick={ () => handleClickedColor(blue) }
                 className={`
                     absolute right-0 top-0 rounded-tr-full 
                     w-1/2 h-1/2 border-2 border-black overflow-hidden cursor-pointer 
@@ -100,7 +89,7 @@ export const SimonDisk = () => {
         
             <div  
                 ref={ red.ref }  
-                onClick={ () => pushColor(red) }
+                onClick={ () => handleClickedColor(red) }
                 className={`
                     absolute bottom-0 left-0 w-1/2 h-1/2 rounded-bl-full 
                     border-2 border-black overflow-hidden cursor-pointer 
@@ -113,7 +102,7 @@ export const SimonDisk = () => {
 
             <div 
                 ref={ green.ref }  
-                onClick={ () => pushColor(green) }
+                onClick={ () => handleClickedColor(green) }
                 className={`
                     absolute bottom-0 right-0 w-1/2 h-1/2 rounded-br-full 
                     border-2 border-black overflow-hidden cursor-pointer 
@@ -128,6 +117,5 @@ export const SimonDisk = () => {
                 <img src={ simonDisk } alt="simonDisk" />
             </div>                                     
         </div>
-        </div>
     )
-}
+} 

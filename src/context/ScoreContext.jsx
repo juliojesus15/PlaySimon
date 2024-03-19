@@ -1,6 +1,9 @@
 import { createContext, useState } from "react";
 
+import { customMessage } from "../constants/message";
+
 export const ScoreContext = createContext();
+
 
 const defaultMultiplayerSettings = {
   turn: 1,
@@ -8,7 +11,9 @@ const defaultMultiplayerSettings = {
   activePlayers: [],
 }
 
-export const ScoreProvider = ({ children }) => {	  	
+export const ScoreProvider = ({ children }) => {
+	const [ message, setMessage ] = useState( customMessage[ 'init'] );
+
   	const [ mode, setMode ] = useState( localStorage.getItem('gameMode') ? localStorage.getItem('gameMode') : null );
 	const [ showResult, setShowResult ] = useState(false);
       
@@ -17,11 +22,22 @@ export const ScoreProvider = ({ children }) => {
 	const [ hits, setHits ] = useState(0);
 	const [ soloPlayer, setSoloPlayer ] = useState(null);
 
+	// level 
+	const [ startLevel, setStartLevel ] = useState(false);
+	const [ time, setTime ] = useState(null);
+
+	const [ level, setLevel ] = useState({
+		level: 1,
+		numColors: 3,
+		speakTime: 3,
+		responseTime: 5
+	})
+
 	// mode
 	const selectGameMode = (gameMode) => {
 		setMode(gameMode);
 		localStorage.setItem('gameMode', gameMode);
-	} 
+	}  
 	
 	// Scores
 	const updateMisses = () => {
@@ -36,13 +52,17 @@ export const ScoreProvider = ({ children }) => {
 		setMisses(0);
 		setHits(0);
 		setMode(null);
+		setSoloPlayer(null);
 	}
 
   	const values = { 
+		message, setMessage,
 		mode, selectGameMode,
 		showResult,	setShowResult,	
 		hits, misses, updateHits, updateMisses, resetSoloValues,
-		soloPlayer, setSoloPlayer
+		soloPlayer, setSoloPlayer,
+		startLevel, setStartLevel,
+		level,
   	} 
   
   	return ( 
@@ -50,4 +70,4 @@ export const ScoreProvider = ({ children }) => {
       		{ children }    
     	</ScoreContext.Provider>
   	) 
-}
+} 
