@@ -1,12 +1,15 @@
 import { useContext, useState, useEffect } from "react"
-import { Soloboard } from "./SoloBoard"
-import { Timer } from "./Timer"
-import { ClockIcon } from "./icons/ClockIcon"
+
 import { ScoreContext } from "../context/ScoreContext"
 import { RoundContext } from "../context/RoundContext"
 
-export const TimeHeader = () => {
-    const { level, setMessage, updateMisses } = useContext(ScoreContext);
+import { SingleBoard } from "./SingleBoard"
+import { Timer } from "./Timer"
+
+import { ClockIcon } from "./icons/ClockIcon"
+
+export const Header = () => {
+    const { level, displayMessageOnScreen, updateMisses } = useContext(ScoreContext);
 
     const { startRound, setStartRound } = useContext(RoundContext)
 
@@ -23,10 +26,10 @@ export const TimeHeader = () => {
             timing--;
             setCounter(timing);
             if (timing === 0) {
-              setMessage("¡Se ha terminado el tiempo!");
-              updateMisses();
-              setStartRound(false);
-              clearInterval(intervalId);
+                displayMessageOnScreen("¡Se ha terminado el tiempo!");
+                updateMisses();
+                setStartRound(false);
+                clearInterval(intervalId);
             }
           }, 1000);
       
@@ -35,19 +38,20 @@ export const TimeHeader = () => {
     }, [ startRound ])
 
     return (
-        <header className="h-28 w-full bg-custom-blue-200 text-white flex flex-col justify-between relative">
-            <div className="flex justify-between items-center h-full">
+        <header className="lg:h-28 bg-custom-blue-200 flex flex-col">
+        
+            <div className="flex flex-col lg:flex-row justify-between  items-center h-full ">
 
-                <div className="px-5 w-1/2 ">
-                    <h2 className="font-bold  hidden text-3xl  text-custom-yellow-100 font-title leading-[1.5rem] tracking-tight"> MODO <br/> SOLITARIO</h2>
-                    <Soloboard />
+                <div className="w-full lg:w-1/2">
+                    <SingleBoard />
                 </div>
                 
-                <div className=" py-2 px-5 w-1/2 text-  flex  items-center justify-end gap-2">
+                
+                <div className=" w-full lg:w-1/2   flex  items-center justify-center lg:justify-end gap-2 ">
                     
-                    <span className="font-title text-5xl text-gray-200 -yellow-100  ">
+                    <p className="font-title text-5xl text-gray-200 ">
                         {counter === level.responseTime+1 ? "00": counter}
-                    </span>
+                    </p>
                     <ClockIcon className="w-10 fill-gray-200 my-auto "/>
                 </div>
             </div>

@@ -5,23 +5,24 @@ import { SequenceContext } from "../context/SequenceContext";
 import { ScoreContext } from "../context/ScoreContext";
 import { RoundContext } from "../context/RoundContext";
 
-import { PlayIcon } from "./icons/PlayIcon";
 import { ReplayIcon } from "./icons/ReplayIcon";
 import { PauseIcon } from "./icons/PauseIcon";
+import { PlayIcon } from "./icons/PlayIcon";
 import { HomeIcon } from "./icons/Home";
 import { InfoIcon } from "./icons/InfoIcon";
-
-import { customMessage } from "../constants/message";
+import { useColorEffects } from "../hooks/useColorEffects";
 
 export const SequenceControl = () => {
     const { generateRandomSequence, sequence }  = useContext(SequenceContext);
-    const { setMessage, resetSoloValues } =  useContext(ScoreContext);
+    const { setMessage, resetSoloValues, displayMessageOnScreen } =  useContext(ScoreContext);
+
+    const { speakSequence } = useColorEffects();
 
     const { setStartRound } = useContext(RoundContext);
 
     const navigate = useNavigate();
 
-    const speakSequence = ( colorSequence ) => {            
+    /*const speakSequence = ( colorSequence ) => {            
         colorSequence.forEach( (color,index) => {    
             
             const { name, colorBasic, colorActive, ref } = color;
@@ -41,28 +42,27 @@ export const SequenceControl = () => {
                 }, 200);
             }, index * 1000); 
         });
-        //setStarLevel(true);
-    }
+    }*/
    
     useEffect( () => {  
         if( sequence.length === 0 ) return;
 
-        speakSequence(sequence);
+        speakSequence(sequence, displayMessageOnScreen);
                 
-        setTimeout(()=> {            
+        setTimeout(()=> {
             let counter = 3
             const intervalId = setInterval( () => {
                 const displayMessage = `Inicia en ${ counter }`;
-                setMessage(displayMessage)
+                displayMessageOnScreen(displayMessage)
 
                 if(counter==0) {
-                    setMessage("¡empezamos!")
+                    displayMessageOnScreen("¡empezamos!")
                     setStartRound( true );
                     clearInterval(intervalId);
                 }
                 counter--;                
             }, 700 )
-        }, 1500)        
+        }, 1500)
         
     }, [ sequence ])
 
@@ -96,50 +96,25 @@ export const SequenceControl = () => {
     return (            
         <footer className="bg-custom-blue-200 border-t-2 border-custom-blue-100/10 h-20">
             <ul className="flex items-center justify-around font-title font-bold text-lg uppercase w-full h-full">
-                <li className="">
-                    <div
-                        onClick={ handleGoHome }  
-                        className="flex flex-col gap-1 items-center cursor-pointer group"
-                    >
-                        <HomeIcon className="fill-custom-yellow-100 w-10 group-hover:scale-110 group-active:scale-95"/>
-                        <span className="text-gray-300 leading-3 group-hover:text-custom-yellow-100"> Inicio </span>
-                    </div>
+                <li className="controller_item group" onClick={ handleGoHome } >                
+                    <HomeIcon className="controller_icon "/>
+                    <span className="controller_label"> Inicio </span>                    
                 </li>
-                <li className="">
-                    <div
-                        onClick={ handleStarGame }  
-                        className="flex flex-col gap-1 items-center cursor-pointer group"
-                    >
-                        <PlayIcon className="fill-custom-yellow-100 w-10 group-hover:scale-110 group-active:scale-95"/>
-                        <span className="text-gray-300 leading-3 group-hover:text-custom-yellow-100"> Empezar </span>
-                    </div>
+                <li className="controller_item group" onClick={ handleStarGame } >                    
+                    <PlayIcon className="controller_icon"/>
+                    <span className="controller_label"> Empezar </span>
                 </li>
-                <li className="">
-                    <div
-                        onClick={ hanleStopGame }  
-                        className="flex flex-col gap-1 items-center cursor-pointer group"
-                    >
-                        <PauseIcon className="fill-custom-yellow-100 w-10 group-hover:scale-110 group-active:scale-95"/>
-                        <span className="text-gray-300 leading-3 group-hover:text-custom-yellow-100"> Pausar </span>
-                    </div>
+                <li className="controller_item group" onClick={ hanleStopGame } >
+                    <PauseIcon className="controller_icon"/>
+                    <span className="controller_label"> Pausar </span>
                 </li>
-                <li className="">
-                    <div
-                        onClick={ handleRepeatGame }  
-                        className="flex flex-col gap-1 items-center cursor-pointer group"
-                        >
-                        <ReplayIcon className="fill-custom-yellow-100 w-10 group-hover:scale-110 group-active:scale-95"/>
-                        <span className="text-gray-300 leading-3 group-hover:text-custom-yellow-100"> Repetir </span>
-                    </div>
+                <li className="controller_item group" onClick={ handleRepeatGame } >                    
+                    <ReplayIcon className="controller_icon"/>
+                    <span className="controller_label"> Repetir </span>
                 </li>
-                <li className="">
-                    <div
-                        onClick={ handleHelpMe }  
-                        className="flex flex-col gap-1 items-center cursor-pointer group"
-                    >
-                        <InfoIcon className="fill-custom-yellow-100 w-10 group-hover:scale-110 group-active:scale-95"/>
-                        <span className="text-gray-300 leading-3 group-hover:text-custom-yellow-100"> Ayuda </span>
-                    </div>
+                <li className="controller_item group" onClick={ handleHelpMe } >                    
+                    <InfoIcon className="controller_icon"/>
+                    <span className="controller_label"> Ayuda </span>
                 </li>
             </ul>
         </footer>

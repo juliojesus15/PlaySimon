@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ScoreContext } from '../context/ScoreContext';
 
-export const SoloMenu = ({ avatars }) => {
+export const SingleMenu = ({ avatars }) => {
     const { setSoloPlayer } = useContext(ScoreContext);
 
     const [username, setUsername] = useState('pikachu');
@@ -30,8 +30,8 @@ export const SoloMenu = ({ avatars }) => {
       };
 
     return  (
-        <div className='border-2 border-gray-400 flex flex-col gap-10 p-10 bg-custom-blue-200 max-w-xl rounded-3xl shadow-2xl shadow-black'>
-          <h2 className='font-title font-bold text-custom-yellow-100 text-5xl text-center tracking-tight uppercase'>
+        <div className='border-2 border-gray-400 flex flex-col gap-10 p-5 lg:p-10 bg-custom-blue-200 max-w-xl rounded-3xl shadow-2xl shadow-black'>
+          <h2 className='font-title font-bold text-custom-yellow-100 text-3xl lg:text-5xl text-center tracking-tight uppercase'>
             ¿Listo para poner a prueba tu memoria?
 
           </h2>
@@ -61,7 +61,7 @@ export const SoloMenu = ({ avatars }) => {
                         src={character.image}
                         alt={`Personaje ${character.id}`}
                         onClick={() => handleCharacterSelect(character.id)}
-                        className='w-24 group-hover:animate-bounce'
+                        className='w-16 sm:w-20 md:w-24 group-hover:animate-bounce'
                         />                  
                     </div>
                   </div>

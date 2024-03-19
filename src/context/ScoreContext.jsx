@@ -14,6 +14,10 @@ const defaultMultiplayerSettings = {
 export const ScoreProvider = ({ children }) => {
 	const [ message, setMessage ] = useState( customMessage[ 'init'] );
 
+	const displayMessageOnScreen = (customMessage) => {
+		setMessage(customMessage);
+	}
+
   	const [ mode, setMode ] = useState( localStorage.getItem('gameMode') ? localStorage.getItem('gameMode') : null );
 	const [ showResult, setShowResult ] = useState(false);
       
@@ -56,7 +60,7 @@ export const ScoreProvider = ({ children }) => {
 	}
 
   	const values = { 
-		message, setMessage,
+		message, setMessage, displayMessageOnScreen,
 		mode, selectGameMode,
 		showResult,	setShowResult,	
 		hits, misses, updateHits, updateMisses, resetSoloValues,

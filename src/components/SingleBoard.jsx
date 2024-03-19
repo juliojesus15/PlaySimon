@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import { ScoreContext } from "../context/ScoreContext";
 
-export const Soloboard = () => {
+export const SingleBoard = () => {
     const { hits, misses, soloPlayer } = useContext(ScoreContext);
     
     return(
                             
-            <div className="flex items-center gap-5  w-full">
+            <div className="flex  items-center justify-between gap-5  p-2">
                                 
                 <div className="flex flex-col  items-center  justify-center  ">
                     <div className="bg-custom-blue-100 border-4 border-custom-yellow-100 rounded-full ">

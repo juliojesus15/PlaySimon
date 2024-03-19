@@ -18,7 +18,7 @@ export const AppRoute = () => {
     const { mode } = useContext(ScoreContext);
 
 	return (
-        <div className="bg-stars bg-cover bg-center h-screen w-screen">
+        <div className="bg-stars bg-cover bg-center h-full min-h-screen">
             <BrowserRouter>
                 <Routes>
                     <Route 

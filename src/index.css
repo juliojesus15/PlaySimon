@@ -10,7 +10,23 @@
 @layer components {
 	/*Custom classes*/
 	.container {
-		@apply max-w-3xl mx-auto;
+		@apply  max-w-none sm:max-w-lg md:max-w-2xl mx-auto;
+	}
+
+	.general_text_white {
+		@apply text-white font-title font-bold;
+	}
+	
+	.controller_item {
+		@apply flex flex-col gap-1 items-center cursor-pointer;
+	}
+
+	.controller_icon {
+		@apply fill-custom-yellow-100 w-7 lg:w-10 group-hover:scale-110 group-active:scale-95;
+	}
+
+	.controller_label {
+		@apply text-gray-300 text-xs lg:text-lg leading-3 group-hover:text-custom-yellow-100;
 	}
 }
 
