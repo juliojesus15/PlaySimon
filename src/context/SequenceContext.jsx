@@ -53,16 +53,17 @@ export const SequenceProvider = ({ children }) => {
 		const sequenceLength = 2;
 
 		setSequence( prev => {
-			const newSequence = [];
+			const newSequence = [baseColors[ 'red' ], baseColors[ 'yellow' ]];
 			const colorName = ['red', 'yellow', 'blue', 'green']
-
+			/*
 			for (let i = 0; i < sequenceLength; i++) {
 				const randomNumber = generateRandomNumber(0,3);
 				const randomColorName = colorName[ randomNumber ];
 				const objColor = baseColors[ randomColorName ];
 
 				newSequence.push( objColor );				
-			}
+			}*/
+
 			return newSequence;
 		});
 	}

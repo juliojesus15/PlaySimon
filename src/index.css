@@ -18,7 +18,7 @@
 	}
 	
 	.controller_item {
-		@apply flex flex-col gap-1 items-center cursor-pointer;
+		@apply flex flex-col gap-1 md:gap-0 items-center justify-center cursor-pointer h-full;
 	}
 
 	.controller_icon {
@@ -26,7 +26,7 @@
 	}
 
 	.controller_label {
-		@apply text-gray-300 text-xs lg:text-lg leading-3 group-hover:text-custom-yellow-100;
+		@apply text-gray-300 text-lg group-hover:text-custom-yellow-100;
 	}
 }
 

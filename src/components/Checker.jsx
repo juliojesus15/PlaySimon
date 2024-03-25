@@ -8,21 +8,22 @@ import { DotColor } from "./DotColor";
 
 export const Checker = () => {
 	const { 
-		sequence, 
+		sequence, generateRandomSequence,
 		frontColor, updateFrontColor 
 	} = useContext(SequenceContext);
 
 	const { 
-		setMessage, 
-		setShowResult,		
-		setStartLevel,
+		displayMessageOnScreen,
+		setShowResult,
 		misses, updateMisses, updateHits,
 	} = useContext(ScoreContext);
 
-	const { setStartRound } = useContext(RoundContext);
+	const { round, activateRound } = useContext(RoundContext);
 
 
 	const [ sequenceIndex, setSequenceIndex ] = useState(null); 	// Indice del elemento de la secuencia para comparar con el frontColor
+
+	const [ nextSequence, setNextSequence ] = useState(false);
 	
 	// Controlar que el usuario ha alcanzado el numero maximo de intentos fallidos para activar el popup
 	useEffect( () => {
@@ -33,9 +34,16 @@ export const Checker = () => {
 	// Establecer en 0 el indice cuando se haya generado la primera secuencia del juego
 	useEffect( () => {
         if(sequence.length==0) return;
-        
-		setSequenceIndex(0);
-    }, [ sequence ])
+		setSequenceIndex(0);	
+		setNextSequence(false);	
+
+    }, [ sequence ]) 
+
+	useEffect( () => {
+		if( !nextSequence ) return;		
+		generateRandomSequence();
+		
+	}, [ nextSequence ])
 
 	// controlar si el color presionado (frontColor) es igual al color correspondiente del indice
 	useEffect(() => {
@@ -56,25 +64,27 @@ export const Checker = () => {
 	// Handler para actualizar estados si el frontColor es igual al color correspondiente del indice
 	const handleCorrectColor = () => {
 		// Caso si se ha recorrido la secuencia completa
-		if (sequenceIndex + 1 === sequence.length) {				
-			setMessage("!Lograste completar toda la secuencia!");
-			updateHits();			
-			setSequenceIndex(0);		// reiniciamos el indice para que se vuelva a comprobar la nueva secuencia
+		if (sequenceIndex + 1 === sequence.length) {
+			console.log("TERMIANDA LA SEQUENCIA...")
+			//displayMessageOnScreen("!Lograste completar toda la secuencia!");
+			updateHits();
 			updateFrontColor(null);		// reiniciamos el fronColor para empezar una nueva secuencia
+			displayMessageOnScreen("¡Correcto!");
+			activateRound(false);
+			setNextSequence(true);		// indicador de secuencia completada correctamente
 		} 
 		// Caso si se ha comprobado solo un color de la secuencia
 		else {
-			setMessage("¡Correcto!");
+			displayMessageOnScreen("¡Correcto!");
 			setSequenceIndex(prevIndex => prevIndex + 1);
 		}
 	}
 
 	// Handler para actualizar estados si el frontcolor es diferente al color correspondiente del indice
 	const handleIncorrectColor = () => {
-		setMessage("¡Incorrecto!");
+		displayMessageOnScreen("¡Incorrecto!");
 		updateMisses();
-		setSequenceIndex(0);		// reiniciamos el indice para que se vuelva a comprobar toda la secuencia
-		setStartRound(false);
+		activateRound(false);
 	};
 	
   	return (

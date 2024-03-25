@@ -4,18 +4,15 @@ import { customMessage } from "../constants/message";
 
 export const ScoreContext = createContext();
 
-
-const defaultMultiplayerSettings = {
-  turn: 1,
-  numPlayers: 0,
-  activePlayers: [],
-}
-
 export const ScoreProvider = ({ children }) => {
 	const [ message, setMessage ] = useState( customMessage[ 'init'] );
 
 	const displayMessageOnScreen = (customMessage) => {
 		setMessage(customMessage);
+	}
+
+	const displayOnScreen = (keyMessage) => {
+		setMessage(customMessage[ keyMessage ]);
 	}
 
   	const [ mode, setMode ] = useState( localStorage.getItem('gameMode') ? localStorage.getItem('gameMode') : null );
@@ -60,7 +57,7 @@ export const ScoreProvider = ({ children }) => {
 	}
 
   	const values = { 
-		message, setMessage, displayMessageOnScreen,
+		message, setMessage, displayMessageOnScreen, displayOnScreen,
 		mode, selectGameMode,
 		showResult,	setShowResult,	
 		hits, misses, updateHits, updateMisses, resetSoloValues,
