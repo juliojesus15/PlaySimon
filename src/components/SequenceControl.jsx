@@ -42,7 +42,7 @@ export const SequenceControl = () => {
         resetSoloValues();
         navigate("/");
     }
-
+ 
     const handleStart = () => {
         generateRandomSequence(0,4);
     }

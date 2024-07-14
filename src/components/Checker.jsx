@@ -38,7 +38,7 @@ export const Checker = () => {
 		setNextSequence(false);	
 
     }, [ sequence ]) 
-
+ 
 	useEffect( () => {
 		if( !nextSequence ) return;		
 		generateRandomSequence();
